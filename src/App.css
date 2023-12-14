@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "Changa";   
+    src: local("Changa"),
+      url("./fonts/Changa-Medium.ttf") format("truetype");
+  }
+
+  .font-Changa {
+    font-family: 'Changa', sans-serif;
+  }

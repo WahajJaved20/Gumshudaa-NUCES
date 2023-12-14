@@ -10,6 +10,9 @@ export default {
         'primaryColor': '#7776BC',
         'secondaryColor' : "#000000"
       },
+      fontFamily: {
+        Changa: ['Changa', 'sans-serif'],
+      },
     },
   },
   plugins: [],
