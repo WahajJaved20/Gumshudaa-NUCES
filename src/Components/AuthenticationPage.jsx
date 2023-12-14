@@ -4,14 +4,15 @@ import { frontLogo } from '../assets';
 const AuthenticationPage = () => {
   return (
     <div className="flex flex-col md:flex-row lg:flex-row h-screen">
-      {/* Left Section (Logo) */}
       <div className="flex-1 bg-secondaryColor flex items-center justify-center p-16">
         <img src={frontLogo} alt="Logo" className="w-2/3 md:w-full lg:w-full" />
       </div>
 
-      {/* Right Section (Authentication Form) */}
       <div className="flex-1 bg-primaryColor flex flex-col items-center justify-center p-8">
-        {/* For larger screens */}
+      <div className="bg-white flex flex-row rounded-3xl w-full max-w-lg border-4 border-solid border-black h-[10%] p-4 mb-4">
+        <button className='flex-1'>LMFAO</button>
+        <button className='flex-1'>LMFAO</button>
+      </div>
         <div className="hidden md:block lg:block bg-white rounded-3xl w-full max-w-lg border-4 border-solid border-black h-[70%] p-8">
         <div className='mt-8'/>
           <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-4">NU EMAIL</label>
@@ -25,7 +26,6 @@ const AuthenticationPage = () => {
           </button>
         </div>
 
-        {/* For smaller screens */}
         <div className="block md:hidden lg:hidden bg-white rounded-3xl w-full max-w-lg border-4 border-solid border-black p-8 mt-4">
           <label className="text-2xl font-bold font-Changa mb-4">NU EMAIL</label>
           <input className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
