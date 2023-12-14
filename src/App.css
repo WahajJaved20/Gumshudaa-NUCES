@@ -1,7 +1,7 @@
 @font-face {
     font-family: "Changa";   
-    src: local("Changa"),
-      url("./fonts/Changa-Medium.ttf") format("truetype");
+    src: local("Changa-ExtraLight"),
+      url("./fonts/Changa-ExtraLight.ttf") format("truetype");
   }
 
   .font-Changa {
