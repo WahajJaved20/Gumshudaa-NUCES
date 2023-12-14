@@ -8,7 +8,8 @@ export default {
     extend: {
       backgroundColor: {
         'primaryColor': '#7776BC',
-        'secondaryColor' : "#000000"
+        'secondaryColor' : "#000000",
+        'tertiaryColor' : "#C0C0FF"
       },
       fontFamily: {
         Changa: ['Changa', 'sans-serif'],
