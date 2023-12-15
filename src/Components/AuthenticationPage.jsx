@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { frontLogo } from '../assets';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const AuthenticationPage = () => {
   const [isLogin, setLogin] = React.useState(true);
   const navigate = useNavigate();
-
+  const {id} = useParams();
+  async function verifyUser(){
+    const result = await fetch(`https://server-gumshuda-nuces.vercel.app/verify/${id}`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id,
+            }),
+        }).then((resp) => resp.json());
+        console.log(result)
+    
+  }
+  useEffect(() => {
+    if(id !== ""){
+      verifyUser()
+      
+    }
+  }, [id])
   const handleTransition = (state) => {
     setLogin(state)
     console.log(isLogin)
