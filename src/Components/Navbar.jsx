@@ -20,12 +20,12 @@ const Navbar = () => {
     }
   }
   return (
-    <nav className="flex flex-col md:flex-row justify-between items-center p-4 bg-primaryColor text-black ">
+    <nav className="flex flex-col md:flex-row justify-between items-center p-4 bg-primaryColor text-black border-b-4 border-gray-600">
       <div className="mb-4 md:mb-0 md:mr-4">
         <img
           src={navbarLogo}
           alt="Logo"
-          className="cursor-pointer"
+
         />
       </div>
       <div className="flex flex-col md:flex-row items-center">
