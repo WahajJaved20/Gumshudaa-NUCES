@@ -1,11 +1,19 @@
 import React from 'react';
 import { frontLogo } from '../assets';
+import { useNavigate } from 'react-router-dom';
 
 const AuthenticationPage = () => {
   const [isLogin, setLogin] = React.useState(true);
+  const navigate = useNavigate();
+
   const handleTransition = (state) => {
     setLogin(state)
     console.log(isLogin)
+  }
+  const handleSubmit = () => {
+    console.log('submit')
+    navigate('/home')
+
   }
   return (
     <div className="flex flex-col md:flex-row lg:flex-row h-screen">
@@ -47,7 +55,8 @@ const AuthenticationPage = () => {
           <label className="text-2xl font-bold font-Changa mb-2 mt-4">PASSWORD</label>
           <input className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="password" />
 
-          <button className="bg-white text-xl font-Changa text-black border-4 border-black rounded-full h-[14%] mt-4 ml-[60%] font-bold w-[50%]">
+          <button onClick={handleSubmit} 
+          className="bg-white text-xl font-Changa text-black border-4 border-black rounded-full h-[14%] mt-4 ml-[60%] font-bold w-[50%]">
             {isLogin ? "LOGIN" : "REGISTER"}
           </button>
         </div>
