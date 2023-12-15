@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { frontLogo } from '../assets';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const AuthenticationPage = () => {
   const [isLogin, setLogin] = React.useState(true);
   const navigate = useNavigate();
-  const {id} = useParams();
+   const location = useLocation();
+   const queryParams = new URLSearchParams(location.search);
+    const id = queryParams.get('id');
   async function verifyUser(){
     const result = await fetch(`https://server-gumshuda-nuces.vercel.app/verify/${id}`, {
             method: 'POST',
@@ -20,7 +22,8 @@ const AuthenticationPage = () => {
     
   }
   useEffect(() => {
-    if(id !== ""){
+    console.log(id)
+    if(id && id.length != 0){
       verifyUser()
       
     }
