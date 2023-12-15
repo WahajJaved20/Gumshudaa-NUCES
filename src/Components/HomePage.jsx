@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import "./homePage.css";
-import ContentCard from "./contentCard";
+import ContentCard from "./ContentCard";
 import { dummyProduct } from "../assets";
 const HomePage = () => {
     const cardsData = [
