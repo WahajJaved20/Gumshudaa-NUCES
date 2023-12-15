@@ -104,7 +104,7 @@ const PostItem = () => {
             />
             <div className="flex flex-row items-center">
             <label className='text-2xl font-bold font-Changa mb-2 mt-2'>Category:</label>
-      <label className="mr-4 text-2xl ml-[20%] font-bold font-Changa">
+      <label className="mr-4 text-2xl ml-[20%] font-bold font-Changa ml-4">
         <input
           type="radio"
           value="lost"
@@ -114,8 +114,9 @@ const PostItem = () => {
         Lost
       </label>
 
-      <label className='text-2xl font-bold font-Changa'>
+      <label className='text-2xl font-bold font-Changa ml-4'>
         <input
+        
           type="radio"
           value="found"
           checked={selectedOption === 'found'}
