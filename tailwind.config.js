@@ -14,6 +14,9 @@ export default {
       fontFamily: {
         Changa: ['Changa', 'sans-serif'],
       },
+      fontSize: {
+        'large' : '50px'
+      },
     },
   },
   plugins: [],
