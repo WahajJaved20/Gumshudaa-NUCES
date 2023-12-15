@@ -44,7 +44,8 @@ const AuthenticationPage = () => {
           <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-2 mt-4">PASSWORD</label>
           <input className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="password" />
           <div className='mt-8'/>
-          <button className="bg-white text-2xl font-Changa text-black border-4 border-black rounded-full h-[12%] mt-4 font-bold ml-[70%] w-[30%]">
+          <button onClick={handleSubmit}
+          className="bg-white text-2xl font-Changa text-black border-4 border-black rounded-full h-[12%] mt-4 font-bold ml-[70%] w-[30%]">
           {isLogin ? "LOGIN" : "REGISTER"}
           </button>
         </div>
