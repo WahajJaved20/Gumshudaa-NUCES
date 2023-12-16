@@ -1,14 +1,35 @@
 import React from 'react';
 import { frontLogo } from '../assets';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PostItem = () => {
+  const phoneRegex = /^\d{11}$/;
   const navigate = useNavigate();
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [selectedOption, setSelectedOption] = React.useState(null);
+  const [productTitle, setProductTitle] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [locationFound, setLocationFound] = React.useState('');
+  const [formData, setFormData] = React.useState({
+    jwtToken: localStorage.getItem('token'),
+    date: new Date().toLocaleDateString(),
+  });
+  const handleInputChange = (event) => {
+    if (event.target.name === 'productTitle') {
+      setProductTitle(event.target.value);
+    } else if (event.target.name === 'phoneNumber') {
+      setPhoneNumber(event.target.value);
+    } else if (event.target.name === 'locationFound') {
+      setLocationFound(event.target.value);
+    }
 
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+    setFormData({ ...formData, category: event.target.value });
   };
   const handleHomeRoute = () => {
     const currentPath = window.location.pathname;
@@ -18,15 +39,64 @@ const PostItem = () => {
   }
   const handleImageChange = (e) => {
     const files = e.target.files;
-    if (files.length + selectedImages.length <= 2) {
-      setSelectedImages([...selectedImages, ...files]);
+    if (files.length <= 1) {
+      var reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onloadend = (e) => {
+        setSelectedImages([reader.result]);
+        setFormData({ ...formData, images: reader.result });
+      };
+      toast.success('Image loaded successfully.');
     } else {
-      alert('Maximum 2 images allowed.');
+      toast.error('Maximum 1 image allowed.');
       e.target.value = null;
+      setSelectedImages([]);
     }
   };
-  const handleSubmit = () => {
-    console.log('submit')
+  const handleSubmit = async () => {
+    if (productTitle === '') {
+      toast.error('Please enter product title');
+      return;
+    }
+    if (phoneNumber === '') {
+      toast.error('Please enter phone number');
+      return;
+    }
+    if (!phoneRegex.test(phoneNumber)) {
+      toast.error('Please enter valid phone number');
+      return;
+    }
+    if (locationFound === '') {
+      toast.error('Please enter location found');
+      return;
+    }
+    if (selectedOption === null) {
+      toast.error('Please select category');
+      return;
+    }
+    if (selectedImages.length === 0) {
+      toast.error('Please select alteast 1 image');
+      return;
+    }
+    setFormData({ ...formData, jwtToken: localStorage.getItem('token') });
+    const result = await fetch(`http://localhost:5000/post`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        }).then((resp) => resp.json());
+        if(result.type === "Success"){
+          toast.success('Post Successful');
+          navigate('/home');
+        }else if(result.type === "Failed" && result.message=== "Invalid JWT Token"){
+          console.log(result)
+          toast.error("Invalid JWT Token");
+        }else{
+          toast.error("Post Failed");
+          toast.info("Please try again and ")
+        }
+    
   }
   return (
     <div className="flex flex-col md:flex-row lg:flex-row h-screen">
@@ -39,13 +109,16 @@ const PostItem = () => {
         <div className="hidden md:block lg:block bg-white rounded-3xl w-full max-w-lg border-4 border-solid border-black h-full p-8">
         <div className='mt-4'/>
           <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-4">PRODUCT TITLE</label>
-          <input className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
+          <input value={productTitle} name="productTitle" onChange={handleInputChange}
+          className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
           <div className='mt-4'/>
           <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-2 mt-4">PHONE NUMBER</label>
-          <input className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="number" />
+          <input value={phoneNumber} onChange={handleInputChange} name='phoneNumber'
+          className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="text" />
           <div className='mt-4'/>
           <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-2 mt-4">LOCATION FOUND</label>
-          <input className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="text" />
+          <input value={locationFound} onChange={handleInputChange} name='locationFound'
+          className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="text" />
           <div className='mt-4'/>
           <label htmlFor="imageInput" className='text-2xl font-bold font-Changa mb-2 mt-4'>Attach Images (Max 2):</label>
             <input
@@ -87,12 +160,15 @@ const PostItem = () => {
 
         <div className="block md:hidden lg:hidden bg-white rounded-3xl w-full max-w-lg border-4 border-solid border-black p-8 mt-4">
           <label className="text-2xl font-bold font-Changa mb-4">PRODUCT TITLE</label>
-          <input className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
+          <input value={productTitle} onChange={handleInputChange} name='productTitle'
+          className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
           <label className="text-2xl font-bold font-Changa mb-2 mt-4">PHONE NUMBER</label>
-          <input className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="text" />
+          <input value={phoneNumber} onChange={handleInputChange} name='phoneNumber'
+          className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="text" />
           <label className="text-2xl font-bold font-Changa mb-4">LOCATION FOUND</label>
-          <input className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
-          <label htmlFor="imageInput" className='text-2xl font-bold font-Changa mb-4'>Attach Images (Max 2):</label>
+          <input value={locationFound} onChange={handleInputChange} name='locationFound'
+          className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
+          <label htmlFor="imageInput" className='text-2xl font-bold font-Changa mb-4'>Attach Images (Max 1):</label>
             <input
             className='text-lg font-bold font-Changa mb-2 mt-4'
             type="file"
