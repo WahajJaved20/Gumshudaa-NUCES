@@ -3,7 +3,7 @@ import { frontLogo } from '../assets';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import imageCompression from 'browser-image-compression';
 const PostItem = () => {
   const phoneRegex = /^\d{11}$/;
   const navigate = useNavigate();
@@ -37,12 +37,32 @@ const PostItem = () => {
       navigate('/home');
     }
   }
-  const handleImageChange = (e) => {
-    const files = e.target.files;
+  async function changeImageSize(files){
+    try {
+      const options = {
+        maxSizeMB: 1, // Set the maximum size for the compressed image
+        maxWidthOrHeight: 800, // Set the maximum width or height for the compressed image
+      };
+      console.log("here")
+      const compressedFile = await imageCompression(files, options);
+      console.log(compressedFile)
+      // return URL.createObjectURL(compressedFile);
+      return compressedFile
+    } catch (error) {
+      console.error('Image compression failed:', error);
+    }
+  }
+  const handleImageChange = async (e) => {
+    let files = e.target.files;
+    console.log(files)
     if (files.length <= 1) {
+    files = await changeImageSize(files[0])
+    console.log(files)
       var reader = new FileReader();
-      reader.readAsDataURL(files[0]);
+      reader.readAsDataURL(files);
+      
       reader.onloadend = (e) => {
+        
         setSelectedImages([reader.result]);
         setFormData({ ...formData, images: reader.result });
       };
@@ -79,6 +99,7 @@ const PostItem = () => {
       return;
     }
     setFormData({ ...formData, jwtToken: localStorage.getItem('token') });
+    console.log(formData)
     const result = await fetch(`https://server-gumshuda-nuces.vercel.app/post`, {
             method: 'POST',
             headers: {
@@ -94,7 +115,7 @@ const PostItem = () => {
           toast.error("Invalid JWT Token");
         }else{
           toast.error("Post Failed");
-          toast.info("Please try again and ")
+          toast.info("Please try again")
         }
     
   }
