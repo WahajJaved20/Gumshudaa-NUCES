@@ -79,7 +79,7 @@ const PostItem = () => {
       return;
     }
     setFormData({ ...formData, jwtToken: localStorage.getItem('token') });
-    const result = await fetch(`http://localhost:5000/post`, {
+    const result = await fetch(`https://server-gumshuda-nuces.vercel.app/post`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
