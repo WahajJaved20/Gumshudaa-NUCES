@@ -120,7 +120,7 @@ const PostItem = () => {
           <input value={locationFound} onChange={handleInputChange} name='locationFound'
           className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="text" />
           <div className='mt-4'/>
-          <label htmlFor="imageInput" className='text-2xl font-bold font-Changa mb-2 mt-4'>Attach Images (Max 2):</label>
+          <label htmlFor="imageInput" className='text-2xl font-bold font-Changa mb-2 mt-4'>Attach Images (Max 1):</label>
             <input
             className='text-lg font-bold font-Changa mb-2 mt-4'
             type="file"
