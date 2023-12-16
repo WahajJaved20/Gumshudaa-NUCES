@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
 import { frontLogo } from '../assets';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const AuthenticationPage = () => {
   const [isLogin, setLogin] = React.useState(true);
+  const [emailID, setEmailID] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const emailRegex = /^[A-Za-z][0-9]{6}@nu\.edu\.pk$/;
   const navigate = useNavigate();
    const location = useLocation();
    const queryParams = new URLSearchParams(location.search);
@@ -22,21 +28,69 @@ const AuthenticationPage = () => {
     
   }
   useEffect(() => {
-    console.log(id)
-    if(id && id.length != 0){
-      verifyUser()
+    // console.log(id)
+    // if(id && id.length != 0){
+    //   verifyUser()
       
-    }
-  }, [id])
+    // }
+  }, [/*id*/])
   const handleTransition = (state) => {
     setLogin(state)
     console.log(isLogin)
   }
-  const handleSubmit = () => {
-    console.log('submit')
-    navigate('/home')
+  const handleSubmit = async () => {
+    if(emailID.length === 0 || password.length === 0){
+      toast.error('Please fill all the fields');
+      return;
+    }else if(!emailRegex.test(emailID)){
+      toast.error('Invalid Email ID');
+      toast.info("Should be an NU Account");
+      return;
+    }
+    if (isLogin) {
+      const result = await fetch(`https://server-gumshuda-nuces.vercel.app/login`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: emailID,
+                password: password
+            }),
+        }).then((resp) => resp.json());
+        if(result.type === "Success"){
+          console.log(result.message)
+          localStorage.setItem('token', result.message);
+          toast.success('Login Successful');
+          navigate('/home');
+        }else{
+          console.log(result)
+          toast.error("Invalid Credentials");
+        }
+    }else{
+      const result = await fetch(`https://server-gumshuda-nuces.vercel.app/register`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: emailID,
+                password: password
+            }),
+        }).then((resp) => resp.json());
+        if(result.type === "Success"){
+          toast.success('Registration Successful');
+          toast.info("Please Login Again")
+          navigate('/');
+        }else if(result.type === "Failed"){
+          console.log(result)
+          toast.error("User Already Exists");
+        }else{
+          console.log(result)
+          toast.error("Registration Failed");
+        }
 
-  }
+  }}
   return (
     <div className="flex flex-col md:flex-row lg:flex-row h-screen">
       <div className={` flex-1 bg-secondaryColor flex items-center justify-center p-16`}>
@@ -61,10 +115,12 @@ const AuthenticationPage = () => {
         <div className="hidden md:block lg:block bg-white rounded-3xl w-full max-w-lg border-4 border-solid border-black h-[70%] p-8">
         <div className='mt-8'/>
           <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-4">NU EMAIL</label>
-          <input className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
+          <input value={emailID} onChange={(e)=>{setEmailID(e.target.value)}}
+          className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
           <div className='mt-8'/>
           <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-2 mt-4">PASSWORD</label>
-          <input className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="password" />
+          <input value={password} onChange={(e)=>{setPassword(e.target.value)}}
+          className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="password" />
           <div className='mt-8'/>
           <button onClick={handleSubmit}
           className="bg-white text-2xl font-Changa text-black border-4 border-black rounded-full h-[12%] mt-4 font-bold ml-[70%] w-[30%]">
@@ -74,9 +130,11 @@ const AuthenticationPage = () => {
 
         <div className="block md:hidden lg:hidden bg-white rounded-3xl w-full max-w-lg border-4 border-solid border-black p-8 mt-4">
           <label className="text-2xl font-bold font-Changa mb-4">NU EMAIL</label>
-          <input className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
+          <input value={emailID} onChange={(e)=>{setEmailID(e.target.value)}}
+          className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
           <label className="text-2xl font-bold font-Changa mb-2 mt-4">PASSWORD</label>
-          <input className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="password" />
+          <input value={password} onChange={(e)=>{setPassword(e.target.value)}}
+          className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="password" />
 
           <button onClick={handleSubmit} 
           className="bg-white text-xl font-Changa text-black border-4 border-black rounded-full h-[14%] mt-4 ml-[60%] font-bold w-[50%]">
