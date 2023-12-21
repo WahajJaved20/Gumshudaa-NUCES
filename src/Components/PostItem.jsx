@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import imageCompression from 'browser-image-compression';
+// import { authorize} from '../utils/uploadToDrive';
 const PostItem = () => {
   const phoneRegex = /^\d{11}$/;
   const navigate = useNavigate();
@@ -40,8 +41,8 @@ const PostItem = () => {
   async function changeImageSize(files){
     try {
       const options = {
-        maxSizeMB: 0.5, // Set the maximum size for the compressed image
-        maxWidthOrHeight: 800, // Set the maximum width or height for the compressed image
+        maxSizeMB: 0.01, // Set the maximum size for the compressed image
+        maxWidthOrHeight: 400, // Set the maximum width or height for the compressed image
       };
       console.log("here")
       const compressedFile = await imageCompression(files, options);
@@ -103,11 +104,13 @@ const PostItem = () => {
     const payloadSize = JSON.stringify(formData).length;
     const payloadSizeInMB = payloadSize/(1024*1024)
     console.log(payloadSizeInMB)
+    // const client = await authorize();
+    // const imageUpload = uploadFile(client, selectedImages, "hello");
+    // console.log(imageUpload)
     const result = await fetch(`https://server-gumshuda-nuces.vercel.app/post`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'mode': 'no-cors'
             },
             body: JSON.stringify(formData),
         }).then((resp) => resp.json());
