@@ -40,7 +40,7 @@ const PostItem = () => {
   async function changeImageSize(files){
     try {
       const options = {
-        maxSizeMB: 1, // Set the maximum size for the compressed image
+        maxSizeMB: 0.5, // Set the maximum size for the compressed image
         maxWidthOrHeight: 800, // Set the maximum width or height for the compressed image
       };
       console.log("here")
@@ -100,6 +100,9 @@ const PostItem = () => {
     }
     setFormData({ ...formData, jwtToken: localStorage.getItem('token') });
     console.log(formData)
+    const payloadSize = JSON.stringify(formData).length;
+    const payloadSizeInMB = payloadSize/(1024*1024)
+    console.log(payloadSizeInMB)
     const result = await fetch(`https://server-gumshuda-nuces.vercel.app/post`, {
             method: 'POST',
             headers: {
