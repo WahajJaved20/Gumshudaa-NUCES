@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import imageCompression from 'browser-image-compression';
+import LoadingBar from './LoadingBar';
 
 const PostItem = () => {
   const phoneRegex = /^\d{11}$/;
@@ -130,7 +131,10 @@ const PostItem = () => {
     
   }
   return (
-    <div className="flex flex-col md:flex-row lg:flex-row h-screen">
+    <>
+    {loading ? <LoadingBar /> :(
+    <>
+      <div className="flex flex-col md:flex-row lg:flex-row h-screen">
       <div className={` flex-1 bg-secondaryColor flex items-center flex-col justify-center p-16`}>
       <h1 className="text-large font-bold font-Changa mb-32 text-white">POST DETAILS</h1>
         <img onClick={handleHomeRoute} src={frontLogo} alt="Logo" className="cursor-pointer w-2/3 md:w-full lg:w-full mb-32" />
@@ -239,6 +243,10 @@ const PostItem = () => {
         </div>
       </div>
     </div>
+    </>
+    )}
+    </>
+    
   );
 };
 
