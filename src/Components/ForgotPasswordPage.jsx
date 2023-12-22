@@ -2,10 +2,14 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingBar from './LoadingBar';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 const ForgotPasswordPage = () => {
+    const navigate = useNavigate();
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get('id');
 const handleSubmit = async () => {
     if (password.length === 0) {
       toast.error('Please Enter Your Password');
