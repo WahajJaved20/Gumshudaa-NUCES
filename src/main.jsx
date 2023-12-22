@@ -8,6 +8,7 @@ import PostItem from './Components/PostItem.jsx'
 import { ToastContainer } from 'react-toastify';
 import NotFoundPage from './Components/RedirectError.jsx'
 import ForgotPasswordLink from './Components/ForgotPasswordLinkGen.jsx'
+import ForgotPasswordPage from './Components/ForgotPasswordPage.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/home" element={<HomePage />} />
         <Route path="/post" element={<PostItem />} />
         <Route path="/forgotPasswordLink" element={<ForgotPasswordLink />} />
+        <Route path="/forgotPasswordPage" element={<ForgotPasswordPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
