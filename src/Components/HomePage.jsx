@@ -13,12 +13,13 @@ const HomePage = () => {
         const fetchData = async () => {
             const response = await fetch("https://server-gumshuda-nuces.vercel.app/get");
             const data = await response.json();
+            data.sort((a, b) => a.closed > b.closed);
             setCardData(data);
             console.log("Calling Server")
         }
         fetchData();
         console.log(cardsData);
-    }, [cardsData]);
+    }, []);
     return (
         <div >
             <Navbar />

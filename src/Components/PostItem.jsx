@@ -17,6 +17,7 @@ const PostItem = () => {
   const [formData, setFormData] = React.useState({
     jwtToken: localStorage.getItem('token'),
     date: new Date().toLocaleDateString(),
+    closed: false
   });
   const handleInputChange = (event) => {
     if (event.target.name === 'productTitle') {
@@ -78,10 +79,6 @@ const PostItem = () => {
       toast.error('Please enter product title');
       return;
     }
-    if (!phoneRegex.test(phoneNumber)) {
-      toast.error('Please enter valid phone number');
-      return;
-    }
     if (locationFound === '') {
       toast.error('Please enter location found');
       return;
@@ -137,11 +134,11 @@ const PostItem = () => {
         <div className="hidden md:block lg:block bg-white rounded-3xl w-full max-w-lg border-4 border-solid border-black h-full p-8">
         <div className='mt-4'/>
           <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-4">PRODUCT TITLE</label>
-          <input value={productTitle} name="productTitle" onChange={handleInputChange}
+          <input value={productTitle} name="productTitle" onChange={handleInputChange} maxLength={20}
           className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
           <div className='mt-4'/>
           <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-2 mt-4">LOCATION FOUND</label>
-          <input value={locationFound} onChange={handleInputChange} name='locationFound'
+          <input value={locationFound} onChange={handleInputChange} name='locationFound' maxLength={20}
           className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="text" />
           <div className='mt-4'/>
           <label htmlFor="imageInput" className='text-2xl font-bold font-Changa mb-2 mt-4'>Attach Images (Max 1):</label>
@@ -184,10 +181,10 @@ const PostItem = () => {
 
         <div className="block md:hidden lg:hidden bg-white rounded-3xl w-full max-w-lg border-4 border-solid border-black p-8 mt-4">
           <label className="text-2xl font-bold font-Changa mb-4">PRODUCT TITLE</label>
-          <input value={productTitle} onChange={handleInputChange} name='productTitle'
+          <input value={productTitle} onChange={handleInputChange} name='productTitle' maxLength={20}
           className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
           <label className="text-2xl font-bold font-Changa mb-4">LOCATION FOUND</label>
-          <input value={locationFound} onChange={handleInputChange} name='locationFound'
+          <input value={locationFound} onChange={handleInputChange} name='locationFound' maxLength={20}
           className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
           <label htmlFor="imageInput" className='text-2xl font-bold font-Changa mb-4'>Attach Images (Max 1):</label>
             <input
