@@ -91,7 +91,7 @@ const PostItem = () => {
       toast.error('Please enter location found');
       return;
     }
-    if (selectedOption === null) {
+    if (selectedOption == null) {
       toast.error('Please select category');
       return;
     }
@@ -104,9 +104,6 @@ const PostItem = () => {
     const payloadSize = JSON.stringify(formData).length;
     const payloadSizeInMB = payloadSize/(1024*1024)
     console.log(payloadSizeInMB)
-    // const client = await authorize();
-    // const imageUpload = uploadFile(client, selectedImages, "hello");
-    // console.log(imageUpload)
     const result = await fetch(`https://server-gumshuda-nuces.vercel.app/post`, {
             method: 'POST',
             headers: {
