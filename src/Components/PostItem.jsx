@@ -12,7 +12,6 @@ const PostItem = () => {
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [selectedOption, setSelectedOption] = React.useState(null);
   const [productTitle, setProductTitle] = React.useState('');
-  const [phoneNumber, setPhoneNumber] = React.useState('');
   const [locationFound, setLocationFound] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [formData, setFormData] = React.useState({
@@ -22,8 +21,6 @@ const PostItem = () => {
   const handleInputChange = (event) => {
     if (event.target.name === 'productTitle') {
       setProductTitle(event.target.value);
-    } else if (event.target.name === 'phoneNumber') {
-      setPhoneNumber(event.target.value);
     } else if (event.target.name === 'locationFound') {
       setLocationFound(event.target.value);
     }
@@ -79,10 +76,6 @@ const PostItem = () => {
   const handleSubmit = async () => {
     if (productTitle === '') {
       toast.error('Please enter product title');
-      return;
-    }
-    if (phoneNumber === '') {
-      toast.error('Please enter phone number');
       return;
     }
     if (!phoneRegex.test(phoneNumber)) {
@@ -147,10 +140,6 @@ const PostItem = () => {
           <input value={productTitle} name="productTitle" onChange={handleInputChange}
           className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
           <div className='mt-4'/>
-          <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-2 mt-4">PHONE NUMBER</label>
-          <input value={phoneNumber} onChange={handleInputChange} name='phoneNumber'
-          className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="text" />
-          <div className='mt-4'/>
           <label className="text-2xl md:text-3xl lg:text-3xl font-bold font-Changa mb-2 mt-4">LOCATION FOUND</label>
           <input value={locationFound} onChange={handleInputChange} name='locationFound'
           className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="text" />
@@ -197,9 +186,6 @@ const PostItem = () => {
           <label className="text-2xl font-bold font-Changa mb-4">PRODUCT TITLE</label>
           <input value={productTitle} onChange={handleInputChange} name='productTitle'
           className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
-          <label className="text-2xl font-bold font-Changa mb-2 mt-4">PHONE NUMBER</label>
-          <input value={phoneNumber} onChange={handleInputChange} name='phoneNumber'
-          className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="text" />
           <label className="text-2xl font-bold font-Changa mb-4">LOCATION FOUND</label>
           <input value={locationFound} onChange={handleInputChange} name='locationFound'
           className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
