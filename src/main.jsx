@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/home" element={<HomePage />} />
         <Route path="/post" element={<PostItem />} />
         <Route path="/forgotPasswordLink" element={<ForgotPasswordLink />} />
-        <Route path="/forgotPasswordPage" element={<ForgotPasswordPage />} />
+        <Route path="/forgetPassword" element={<ForgotPasswordPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
