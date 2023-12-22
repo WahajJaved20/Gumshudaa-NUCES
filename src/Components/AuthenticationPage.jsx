@@ -29,6 +29,29 @@ const AuthenticationPage = () => {
     
   }
   useEffect(() => {
+    const getUser = async () => {
+      const response = await fetch("https://server-gumshuda-nuces.vercel.app/verifyJWT", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ jwtToken: localStorage.getItem('token') }),
+      });
+      const data = await response.json();
+      console.log(data)
+      if(data.type === "Failed"){
+          
+      }else{
+          toast.info("Already Logged In");
+          navigate("/home");
+      }
+    
+      
+    
+  }
+  if(localStorage.getItem('token')){
+    getUser()
+  }
     // console.log(id)
     // if(id && id.length != 0){
     //   verifyUser()
