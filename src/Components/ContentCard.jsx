@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 
 const ContentCard = ({ data, user }) => {
   useEffect(() => {
-    console.log(user);
   }, [data]);
   const handleClick = () => {
     try{
@@ -20,6 +19,9 @@ const ContentCard = ({ data, user }) => {
       console.log(err);
       toast.error("Error Occured");
     }
+    setTimeout(() => {
+      location.reload();
+    }, 500);
   }
   return (
     <div className="flex bg-white rounded-lg shadow-md p-6 mb-4">
