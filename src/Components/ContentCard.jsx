@@ -37,7 +37,7 @@ const ContentCard = ({ data, user }) => {
          <h2 className="text-xl mb-2 font-Changa font-bold truncate">{data.productTitle}</h2>
          <p className="mb-2 font-Changa font-bold truncate">{data.userId}</p>
          <p className="font-Changa font-bold truncate">{data.locationFound}</p>
-         <p className="font-Changa font-bold truncate">{data.date}</p>
+         <p className="font-Changa font-bold truncate mb-2">{data.date}</p>
          <button onClick={handleClick} disabled={(user !== data.userId) || data.closed} className={`${!data.closed ? "bg-green-500 " : "bg-red-500 "}font-Changa font-bold truncate text-white font-bold py-2 px-4 rounded ${!data.closed ? " hover:bg-red-500" : " hover:bg-green-500"}`}>
            {!data.closed ? user === data.userId ? "Mark as Closed" : "Open" : "Closed"}
          </button> 
