@@ -5,6 +5,7 @@ import ContentCard from "./ContentCard";
 import LoadingBar from "./LoadingBar";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 const HomePage = () => {
     const navigate = useNavigate();
     const [cardsData, setCardData] = React.useState([]);
@@ -78,6 +79,7 @@ const HomePage = () => {
                         <ContentCard key={index} data={data} user={currentUser}/>
                     ))}
                     </div>
+                    <Footer />
                 </>
              )}
             
