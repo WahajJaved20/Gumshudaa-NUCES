@@ -96,7 +96,7 @@ const AuthenticationPage = () => {
         }else{
           console.log(result)
           setLoading(false);
-          toast.error("Invalid Credentials");
+          toast.error(result.message);
         }
     }else{
       const result = await fetch(`https://server-gumshuda-nuces.vercel.app/register`, {
@@ -111,7 +111,7 @@ const AuthenticationPage = () => {
         }).then((resp) => resp.json());
         if(result.type === "Success"){
           toast.success('Registration Successful');
-          toast.info("Please Login Again")
+          toast.info("Please Check your Gmail for verification link")
           setLoading(false);
           navigate('/');
         }else if(result.type === "Failed"){
