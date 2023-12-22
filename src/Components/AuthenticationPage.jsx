@@ -12,9 +12,9 @@ const AuthenticationPage = () => {
   const [loading, setLoading] = React.useState(false);
   const emailRegex = /^[A-Za-z][0-9]{6}@nu\.edu\.pk$/;
   const navigate = useNavigate();
-   const location = useLocation();
-   const queryParams = new URLSearchParams(location.search);
-    const id = queryParams.get('id');
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get('id');
   async function verifyUser(){
     const result = await fetch(`https://server-gumshuda-nuces.vercel.app/verify/${id}`, {
             method: 'POST',
@@ -26,7 +26,11 @@ const AuthenticationPage = () => {
             }),
         }).then((resp) => resp.json());
         console.log(result)
-    
+        if(result.type === "Success"){
+          toast.success('User Verified');
+          toast.info("Please Login Again")
+          navigate('/');
+        }
   }
   useEffect(() => {
     const getUser = async () => {
@@ -52,12 +56,12 @@ const AuthenticationPage = () => {
   if(localStorage.getItem('token')){
     getUser()
   }
-    // console.log(id)
-    // if(id && id.length != 0){
-    //   verifyUser()
-      
-    // }
-  }, [/*id*/])
+    console.log(id)
+    if(id && id.length != 0){
+      verifyUser()
+
+    }
+  }, [])
   const handleTransition = (state) => {
     setLogin(state)
     console.log(isLogin)

@@ -41,7 +41,7 @@ const Navbar = () => {
         <Divider />
         <a href="#" className=" text-2xl mb-2 md:mb-0 md:mr-4 font-Changa font-bold" onClick={handlePostRoute}>Post</a>
         <Divider />
-        <a href="#" className='text-2xl mb-2 md:mb-0 font-Changa font-bold' onClick={handleLogout}>Log Out</a>
+        <a href="#" className='text-2xl mb-2 md:mb-0 font-Changa font-bold md:mr-4' onClick={handleLogout}>Log Out</a>
       </div>
     </nav>
   );
