@@ -35,7 +35,7 @@ const Navbar = () => {
 
         />
       </div>
-      <div className="flex flex-col md:flex-row items-center">
+      <div className="flex flex-col md:flex-row items-center text-white">
         <Divider />
         <a href="#" className="text-2xl mb-2 md:mb-0 md:mr-4 font-Changa font-bold" onClick={handleHomeRoute}>Home</a>
         <Divider />

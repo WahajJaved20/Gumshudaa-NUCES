@@ -77,7 +77,6 @@ const PostItem = () => {
     }
   };
   const handleSubmit = async () => {
-    setLoading(true);
     if (productTitle === '') {
       toast.error('Please enter product title');
       return;
@@ -102,6 +101,7 @@ const PostItem = () => {
       toast.error('Please select alteast 1 image');
       return;
     }
+    setLoading(true);
     
     setFormData({ ...formData, jwtToken: localStorage.getItem('token') });
     console.log(formData)
