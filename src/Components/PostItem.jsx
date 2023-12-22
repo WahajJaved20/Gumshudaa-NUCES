@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import imageCompression from 'browser-image-compression';
-// import { authorize} from '../utils/uploadToDrive';
+
 const PostItem = () => {
   const phoneRegex = /^\d{11}$/;
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ const PostItem = () => {
   const [productTitle, setProductTitle] = React.useState('');
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [locationFound, setLocationFound] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
   const [formData, setFormData] = React.useState({
     jwtToken: localStorage.getItem('token'),
     date: new Date().toLocaleDateString(),
@@ -75,6 +76,7 @@ const PostItem = () => {
     }
   };
   const handleSubmit = async () => {
+    setLoading(true);
     if (productTitle === '') {
       toast.error('Please enter product title');
       return;
@@ -99,6 +101,7 @@ const PostItem = () => {
       toast.error('Please select alteast 1 image');
       return;
     }
+    
     setFormData({ ...formData, jwtToken: localStorage.getItem('token') });
     console.log(formData)
     const payloadSize = JSON.stringify(formData).length;
@@ -113,11 +116,14 @@ const PostItem = () => {
         }).then((resp) => resp.json());
         if(result.type === "Success"){
           toast.success('Post Successful');
+          setLoading(false);
           navigate('/home');
         }else if(result.type === "Failed" && result.message=== "Invalid JWT Token"){
           console.log(result)
+          setLoading(false);
           toast.error("Invalid JWT Token");
         }else{
+          setLoading(false);
           toast.error("Post Failed");
           toast.info("Please try again")
         }

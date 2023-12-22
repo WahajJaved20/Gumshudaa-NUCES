@@ -3,12 +3,13 @@ import { frontLogo } from '../assets';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import LoadingBar from './LoadingBar';
 
 const AuthenticationPage = () => {
   const [isLogin, setLogin] = React.useState(true);
   const [emailID, setEmailID] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
   const emailRegex = /^[A-Za-z][0-9]{6}@nu\.edu\.pk$/;
   const navigate = useNavigate();
    const location = useLocation();
@@ -47,6 +48,7 @@ const AuthenticationPage = () => {
       toast.info("Should be an NU Account");
       return;
     }
+    setLoading(true);
     if (isLogin) {
       const result = await fetch(`https://server-gumshuda-nuces.vercel.app/login`, {
             method: 'POST',
@@ -62,9 +64,11 @@ const AuthenticationPage = () => {
           console.log(result.message)
           localStorage.setItem('token', result.message);
           toast.success('Login Successful');
+          setLoading(false);
           navigate('/home');
         }else{
           console.log(result)
+          setLoading(false);
           toast.error("Invalid Credentials");
         }
     }else{
@@ -81,18 +85,23 @@ const AuthenticationPage = () => {
         if(result.type === "Success"){
           toast.success('Registration Successful');
           toast.info("Please Login Again")
+          setLoading(false);
           navigate('/');
         }else if(result.type === "Failed"){
           console.log(result)
+          setLoading(false);
           toast.error("User Already Exists");
         }else{
           console.log(result)
+          setLoading(false);
           toast.error("Registration Failed");
         }
 
   }}
-  return (
-    <div className="flex flex-col md:flex-row lg:flex-row h-screen">
+  return (<>
+    {loading ? <LoadingBar /> : (
+      <>
+        <div className="flex flex-col md:flex-row lg:flex-row h-screen">
       <div className={` flex-1 bg-secondaryColor flex items-center justify-center p-16`}>
         <img src={frontLogo} alt="Logo" className="w-2/3 md:w-full lg:w-full" />
       </div>
@@ -143,6 +152,10 @@ const AuthenticationPage = () => {
         </div>
       </div>
     </div>
+      </>
+    )}
+    
+    </>
   );
 };
 
