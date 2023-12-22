@@ -3,23 +3,60 @@ import Navbar from "./Navbar";
 import "./homePage.css";
 import ContentCard from "./ContentCard";
 import LoadingBar from "./LoadingBar";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const HomePage = () => {
+    const navigate = useNavigate();
     const [cardsData, setCardData] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
+    const [currentUser, setCurrentUser] = React.useState('');
     React.useEffect(() => {
-        if(cardsData.length > 0){
-            setLoading(false);
-        }
-        const fetchData = async () => {
+        const fetchData = async (user) => {
             const response = await fetch("https://server-gumshuda-nuces.vercel.app/get");
-            const data = await response.json();
-            data.sort((a, b) => a.closed > b.closed);
+            let data = await response.json();
+            data = data.sort((a, b) => a.closed > b.closed);
+            data = data.sort((a, b) => {
+                const aMatches = a["userId"] === user;
+                const bMatches = b["userId"] === user;
+                if (aMatches && !bMatches) {
+                  return -1;
+                } else if (!aMatches && bMatches) {
+                  return 1; 
+                } else {
+                  return 0;
+                }
+              });
+            console.log(data);
             setCardData(data);
             console.log("Calling Server")
         }
-        fetchData();
-        console.log(cardsData);
-    }, []);
+        const getUser = async () => {
+            const response = await fetch("https://server-gumshuda-nuces.vercel.app/verifyJWT", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ jwtToken: localStorage.getItem('token') }),
+            });
+            const data = await response.json();
+            if(data.type === "Failed"){
+                toast.error("Please Login First");
+                navigate("/");
+            }else{
+                setCurrentUser(data.message.userId);
+                return data.message.userId;
+            }
+            
+        }
+        if(cardsData.length > 0){
+            setLoading(false);
+        }else{
+            getUser().then((user) => {
+                fetchData(user);
+            })
+        }
+       
+    }, [cardsData]);
     return (
         <div >
             <Navbar />
