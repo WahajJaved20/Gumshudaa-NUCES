@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import NotFoundPage from './Components/RedirectError.jsx'
 import ForgotPasswordLink from './Components/ForgotPasswordLinkGen.jsx'
 import ForgotPasswordPage from './Components/ForgotPasswordPage.jsx'
+import { Analytics } from '@vercel/analytics/react';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
+    <Analytics />
     <ToastContainer
       position="bottom-left"
       autoClose={3000}
