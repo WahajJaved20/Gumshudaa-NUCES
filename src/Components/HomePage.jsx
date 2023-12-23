@@ -63,8 +63,11 @@ const HomePage = () => {
             setLoading(false);
         }else{
             getUser().then((user) => {
-                fetchData(user);
+                fetchData(user).then(() => {
+                    setLoading(false);
+                })
             })
+        
         }
        
     }, [cardsData]);
