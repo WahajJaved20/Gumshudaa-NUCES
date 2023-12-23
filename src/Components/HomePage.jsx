@@ -81,6 +81,7 @@ const HomePage = () => {
                     {cardsData.map((data, index) => (
                         <ContentCard key={index} data={data} user={currentUser}/>
                     ))}
+                    {cardsData.length === 0 ? <div className="h-screen"><h1 className="ml-16 text-2xl font-bold">No Data Found</h1></div> : <></>}
                     </div>
                     <Footer />
                 </>
