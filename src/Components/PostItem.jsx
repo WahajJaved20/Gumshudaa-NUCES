@@ -143,7 +143,7 @@ const PostItem = () => {
           <div className='mt-4'/>
           <label htmlFor="imageInput" className='text-2xl font-bold font-Changa mb-2 mt-4'>Attach Images (Max 1):</label>
             <input
-            className='text-lg font-bold font-Changa mb-2 mt-4'
+            className=' text-lg font-bold font-Changa mb-2 mt-4 w-full'
             type="file"
             id="imageInput"
             name="images"
@@ -188,7 +188,7 @@ const PostItem = () => {
           className="border-b-4 font-bold text-xl border-black focus:outline-none mt-4 font-Changa w-full mb-4" type="text" />
           <label htmlFor="imageInput" className='text-2xl font-bold font-Changa mb-4'>Attach Images (Max 1):</label>
             <input
-            className='text-lg font-bold font-Changa mb-2 mt-4'
+            className='text-lg font-bold font-Changa mb-2 mt-4 w-full'
             type="file"
             id="imageInput"
             name="images"
