@@ -158,7 +158,7 @@ const AuthenticationPage = () => {
           <input value={password} onChange={(e)=>{setPassword(e.target.value)}}
           className="border-b-4 font-bold text-lg border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="password" />
           <div className='mt-8'/>
-          <a href="/forgotPasswordLink" className="text-md md:text-2xl lg:text-2xl font-Changa font-bold text-black hover:text-red-500">Forgot Password?</a>
+          <a href="/forgotPasswordLink" className="text-md md:text-2xl lg:text-2xl font-Changa font-bold text-black hover:text-red-500">{isLogin ? "Forgot Password?" : null}</a>
           <button onClick={handleSubmit}
           className="bg-white text-2xl font-Changa text-black border-4 border-black rounded-full h-[12%] mt-4 font-bold ml-[70%] w-[30%]">
           {isLogin ? "LOGIN" : "REGISTER"}
@@ -172,7 +172,7 @@ const AuthenticationPage = () => {
           <label className="text-2xl font-bold font-Changa mb-2 mt-4">PASSWORD</label>
           <input value={password} onChange={(e)=>{setPassword(e.target.value)}}
           className="border-b-4 font-bold text-xl border-black focus:outline-none font-Changa w-full mb-4 mt-4" type="password" />
-          <a href="/forgotPasswordLink" className="text-md md:text-2xl lg:text-2xl font-Changa font-bold text-black hover:text-red-500">Forgot Password?</a>
+          <a href="/forgotPasswordLink" className="text-md md:text-2xl lg:text-2xl font-Changa font-bold text-black hover:text-red-500">{isLogin ? "Forgot Password?" : null}</a>
           <button onClick={handleSubmit} 
           className="bg-white text-xl font-Changa text-black border-4 border-black rounded-full h-[14%] mt-4 ml-[60%] font-bold w-[50%]">
             {isLogin ? "LOGIN" : "REGISTER"}
